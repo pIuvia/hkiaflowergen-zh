@@ -568,7 +568,7 @@
 
                         <div class="row g-3 mb-4 align-items-end">
                             <div class="col-md-4">
-                                <label for="createMaxSteps" class="form-label">Max Breeding Steps</label>
+                                <label for="createMaxSteps" class="form-label">最多繁育代数</label>
                                 <select class="form-select" id="createMaxSteps">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -582,7 +582,7 @@
                                 <div class="form-check mt-2">
                                     <input class="form-check-input" type="checkbox" id="createIncludeGridFlowers" checked>
                                     <label class="form-check-label" for="createIncludeGridFlowers">
-                                        Include flowers already on my grid as available parents
+                                        将地块网格中已有的花朵作为可用亲本
                                     </label>
                                 </div>
                             </div>
@@ -590,16 +590,16 @@
 
                         <div class="d-flex flex-wrap gap-2 mb-4 create-flower-actions">
                             <button type="button" class="btn btn-pink rounded-pill" id="generateFlowerPlansButton">
-                                <i class="fas fa-search me-1"></i>Generate Plans
+                                <i class="fas fa-search me-1"></i>生成方案
                             </button>
                             <button type="button" class="btn btn-caf rounded-pill" id="cancelFlowerPlansButton" hidden>
-                                <i class="fas fa-stop me-1"></i>Cancel
+                                <i class="fas fa-stop me-1"></i>取消
                             </button>
                             <button type="button" class="btn btn-outline-secondary rounded-pill" id="clearFlowerPlansButton" hidden>
-                                <i class="fas fa-eraser me-1"></i>Clear
+                                <i class="fas fa-eraser me-1"></i>清除
                             </button>
                             <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">
-                                <i class="fas fa-times me-1"></i>Close
+                                <i class="fas fa-times me-1"></i>关闭
                             </button>
                         </div>
                     </form>
@@ -613,10 +613,10 @@
 
                     <div class="results-container">
                         <h6 class="mb-3">
-                            <i class="fas fa-seedling me-2"></i>Breeding Plans
+                            <i class="fas fa-seedling me-2"></i>繁育方案
                         </h6>
                         <div class="results-list create-flower-results" id="createFlowerPlansList">
-                            <div class="text-muted text-center py-3">Enter a target flower and click Generate Plans.</div>
+                            <div class="text-muted text-center py-3">输入目标花朵，然后点击“生成方案”</div>
                         </div>
                     </div>
 
@@ -624,17 +624,17 @@
                     <div id="createFlowerOverwriteConfirm" class="create-flower-overwrite-confirm" hidden>
                         <div class="create-flower-overwrite-card" role="alertdialog" aria-labelledby="createFlowerApplyConfirmTitle" aria-describedby="createFlowerApplyConfirmMessage">
                             <h6 id="createFlowerApplyConfirmTitle" class="mb-2">
-                                <i class="fas fa-exclamation-triangle me-2 text-warning"></i>Overwrite Plot?
+                                <i class="fas fa-exclamation-triangle me-2 text-warning"></i>覆盖地块？
                             </h6>
                             <p class="mb-3" id="createFlowerApplyConfirmMessage">
-                                Apply this layout? Plantable cells on your current plot will be cleared, then the suggested parent flowers will be placed.
+                                应用方案布局后将清空您当前的地块网格，自动填入方案中推荐的亲本花朵。
                             </p>
                             <div class="d-flex flex-wrap gap-2 justify-content-end">
                                 <button type="button" class="btn btn-outline-secondary rounded-pill" id="createFlowerApplyConfirmCancel">
-                                    Cancel
+                                    取消
                                 </button>
                                 <button type="button" class="btn btn-edit rounded-pill" id="createFlowerApplyConfirmOk">
-                                    Confirm
+                                    确定
                                 </button>
                             </div>
                         </div>
@@ -650,11 +650,11 @@
             <div class="modal-content border-0 rounded-4">
                 <div class="modal-header bg-pink-gradient text-white border-0 rounded-top-4">
                     <h5 class="modal-title">
-                        <i class="fas fa-chart-pie me-2"></i>Breeding Analysis
+                        <i class="fas fa-chart-pie me-2"></i>繁育分析
                     </h5>
                     <div class="d-flex align-items-center gap-2">
                         <button type="button" class="btn btn-sm btn-light rounded-pill" id="breedingAnalysisHelpButton" title="Icon Legend">
-                            <i class="fas fa-question-circle me-1"></i>Help
+                            <i class="fas fa-question-circle me-1"></i>帮助
                         </button>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -664,20 +664,20 @@
                         <div class="col-12">
                             <div class="analysis-summary bg-light-pink rounded-3 p-3 mb-4">
                                 <h6 class="mb-2">
-                                    <i class="fas fa-info-circle me-2"></i>Analysis Summary
+                                    <i class="fas fa-info-circle me-2"></i>分析总结
                                 </h6>
                                 <div id="analysisModeNotes"></div>
-                                <p class="mb-0" id="analysisSummary">Click "Analyze Flowers" to see breeding possibilities!</p>
+                                <p class="mb-0" id="analysisSummary">点击“分析花朵”以查看繁育可能性!</p>
                                 <div class="form-text mt-2">
                                     <i class="fas fa-info-circle me-1"></i>Shows the probability of getting at least one of each flower combination from all possible breeding locations (green cells) on your grid.<br>
-                                    <i class="fas fa-info-circle me-1"></i>Percentages are automatically calculated with Fertilizer use.
+                                    <i class="fas fa-info-circle me-1"></i>当前百分比已自动包含使用肥料的效果
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="results-container">
                                 <h6 class="mb-3">
-                                    <i class="fas fa-seedling me-2"></i>Possible Flowers
+                                    <i class="fas fa-seedling me-2"></i>可能生成的花
                                 </h6>
                                 <div class="results-list" id="possibleFlowersList">
                                     <!-- Results will be populated here -->
