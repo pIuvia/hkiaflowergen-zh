@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M3V5W7VWCJ"></script>
@@ -15,8 +15,8 @@
     <!--Google SEO-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HKIA Flower Breeding Simulator</title>
-    <meta name="description" content="The Hello Kitty Island Adventure (HKIA) Flower Generator is an interactive website that can be used to assist you with flower breeding, color/pattern transfers, and organizing flower plots with accurate calculations.">
+    <title>HKIA 花朵模拟器</title>
+    <meta name="description" content="Hello Kitty Island Adventure(HKIA)花朵模拟器是一个交互式网站，可用于您进行花朵培育、颜色/图案转移。">
     <!-- Tell Google the homepage is the clean URL (not shared ?id= garden links) -->
     <link rel="canonical" href="https://flowerfulpowerful.github.io/hkiaflowergen/">
     <script>
@@ -35,7 +35,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "HKIA Flower Generator",
+      "name": "HKIA 花朵模拟器中文版",
       "alternateName": ["HKIA Flower Breeding Simulator", "Flowerful Flower Generator"],
       "url": "https://flowerfulpowerful.github.io/hkiaflowergen/"
     }
@@ -74,7 +74,7 @@
     <audio id="popAudio" src="assets/audio/pop.mp3"></audio>
 
     <!-- Floating Dark Mode Toggle (settings switch stays in Preferences) -->
-    <button type="button" id="floatingDarkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">
+    <button type="button" id="floatingDarkModeToggle" title="深色模式" aria-label="深色模式">
         <i class="fas fa-moon" aria-hidden="true"></i>
     </button>
 
@@ -83,7 +83,7 @@
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img src="assets/logo.png" alt="HKIA Flower Simulator" class="logo-img me-2">
-                <span class="brand-text">Flower Simulator</span>
+                <span class="brand-text">花朵模拟器</span>
             </a>
             
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -94,17 +94,17 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="howToButton">
-                            <i class="fas fa-question-circle me-1"></i>How to Use
+                            <i class="fas fa-question-circle me-1"></i>如何使用
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="aboutButton">
-                            <i class="fas fa-info-circle me-1"></i>About
+                            <i class="fas fa-info-circle me-1"></i>关于
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="settingsButton">
-                            <i class="fas fa-cog me-1"></i>Settings
+                            <i class="fas fa-cog me-1"></i>设置
                         </a>
                     </li>
                 </ul>
@@ -123,13 +123,13 @@
                         <div class="col-12 col-md-6 col-lg-2">
                             <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
                                 <button class="btn btn-outline-pink rounded-pill" id="clearGridButton">
-                                    <i class="fas fa-trash-alt me-1"></i>Clear Grid
+                                    <i class="fas fa-trash-alt me-1"></i>清空
                                 </button>
                                 <button class="btn btn-outline-pink rounded-pill" id="customizeButton">
-                                    <i class="fas fa-cog me-1"></i>Customize
+                                    <i class="fas fa-cog me-1"></i>自定义
                                 </button>
                                 <button class="btn btn-outline-pink rounded-pill" id="glossaryButton">
-                                    <i class="fas fa-book me-1"></i>Glossary
+                                    <i class="fas fa-book me-1"></i>花朵图鉴
                                 </button>
                             </div>
                         </div>
@@ -143,10 +143,10 @@
                                         <input class="form-check-input" type="checkbox" id="paintModeToggle">
                                         <label class="form-check-label" for="paintModeToggle">
                                             <span class="paint-mode-text paint-mode-off-text">
-                                                <i class="fas fa-paint-brush me-1"></i>Paint Mode Off
+                                                <i class="fas fa-paint-brush me-1"></i>绘制模式关
                                             </span>
                                             <span class="paint-mode-text paint-mode-on-text">
-                                                <i class="fas fa-paint-brush me-1"></i>Paint Mode On
+                                                <i class="fas fa-paint-brush me-1"></i>绘制模式开
                                             </span>
                                         </label>
                                     </div>
@@ -154,17 +154,17 @@
 
                                 <!-- Paint Mode Indicators -->
                                 <div class="paint-mode-indicators" id="paintModeIndicators" style="display: none;">
-                                    <div class="paint-mode-indicator clickable" id="disableModeIndicator" title="Click to switch to disable mode">
+                                    <div class="paint-mode-indicator clickable" id="disableModeIndicator" title="点击切换到禁用模式">
                                         <i class="fas fa-ban"></i>
-                                        <span>Disable</span>
+                                        <span>禁用</span>
                                     </div>
-                                    <div class="paint-mode-indicator clickable" id="copyModeIndicator" title="Click to switch to copy mode">
+                                    <div class="paint-mode-indicator clickable" id="copyModeIndicator" title="点击切换到复制模式">
                                         <i class="fas fa-copy"></i>
-                                        <span>Copy</span>
+                                        <span>复制</span>
                                     </div>
-                                    <div class="paint-mode-indicator clickable" id="reimagineModeIndicator" title="Click to switch to Reimagine mode">
+                                    <div class="paint-mode-indicator clickable" id="reimagineModeIndicator" title="点击切换到重塑想象模式">
                                         <i class="fas fa-rainbow"></i>
-                                        <span>Reimagine</span>
+                                        <span>重塑想象</span>
                                     </div>
                                 </div>
 
@@ -174,10 +174,10 @@
                                         <input class="form-check-input" type="checkbox" id="viewModeToggle">
                                         <label class="form-check-label" for="viewModeToggle">
                                             <span class="mode-text edit-mode-text">
-                                                <i class="fas fa-edit me-1"></i>Edit Mode
+                                                <i class="fas fa-edit me-1"></i>编辑模式
                                             </span>
                                             <span class="mode-text view-mode-text">
-                                                <i class="fas fa-eye me-1"></i>View Mode
+                                                <i class="fas fa-eye me-1"></i>视图模式
                                             </span>
                                         </label>
                                     </div>
@@ -190,11 +190,11 @@
                             <div class="d-flex flex-column align-items-center">
                                 <!-- Percentage Mode Indicators -->
                                 <div class="percentage-indicators mb-3">
-                                    <div class="indicator-item clickable" id="greenhouseIndicator" title="Click to toggle Greenhouse Percentages">
+                                    <div class="indicator-item clickable" id="greenhouseIndicator" title="点击切换为温室百分比">
                                         <i class="fas fa-seedling"></i>
                                     </div>
 
-                                    <div class="indicator-item clickable" id="eventIndicator" title="Click to toggle Event Mode">
+                                    <div class="indicator-item clickable" id="eventIndicator" title="点击进入活动模式">
                                         <i class="fas fa-calendar-alt"></i>
                                     </div>
                                 </div>
@@ -203,16 +203,16 @@
                                 <div class="event-status-text mb-3" id="eventStatusText" style="display: none;">
                                     <div class="badge event-badge px-3 py-2 rounded-pill">
                                         <i class="fas fa-calendar-alt me-1"></i>
-                                        <span id="eventStatusTextContent">Event Active</span>
+                                        <span id="eventStatusTextContent">活动已开启</span>
                                     </div>
                                 </div>
                                 
                                 <div class="analyze-actions-row d-flex align-items-center justify-content-center gap-2 w-100">
-                                    <button type="button" class="create-flower-circle-btn" id="createFlowerButton" title="Create a Flower" aria-label="Create a Flower">
+                                    <button type="button" class="create-flower-circle-btn" id="createFlowerButton" title="创建花朵" aria-label="Create a Flower">
                                         <i class="fas fa-lightbulb" aria-hidden="true"></i>
                                     </button>
                                     <button class="btn btn-pink rounded-pill" id="analyzeButton">
-                                        <i class="fas fa-seedling me-1"></i>Analyze Flowers
+                                        <i class="fas fa-seedling me-1"></i>分析花朵
                                     </button>
                                 </div>
                             </div>
@@ -228,7 +228,7 @@
                 <div class="grid-container bg-white rounded-4 shadow-sm p-4">
                     <div class="grid-header mb-3">
                         <h5 class="text-center mb-0">
-                            <i class="fas fa-th me-2"></i><span id="gridTitleDisplay">Flower Breeding Grid</span>
+                            <i class="fas fa-th me-2"></i><span id="gridTitleDisplay">花朵杂交网格</span>
                             <small class="text-muted ms-2" id="gridSizeDisplay">5x5</small>
                         </h5>
                         
