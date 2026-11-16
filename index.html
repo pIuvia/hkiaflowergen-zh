@@ -45,8 +45,8 @@
             <!--Embedding Stuff -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://flowerfulpowerful.github.io/hkiaflowergen/" />
-    <meta property="og:title" content="HKIA Flower Generator" />
-    <meta property="og:description" content="The HKIA Flower Generator is an interactive website that can be used to assist you with flower breeding, color/pattern transfers, and organizing flower plots with accurate calculations." />
+    <meta property="og:title" content="HKIA 花朵模拟器中文版" />
+    <meta property="og:description" content="Hello Kitty Island Adventure(HKIA)花朵模拟器是一个交互式网站，可用于您进行花朵培育、颜色/图案转移，并通过精确计算来规划花圃。" />
     <meta property="og:image" content="https://flowerfulpowerful.github.io/hkiaflowergen/assets/embed1.png" />
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="theme-color" content="#b2e48f"/>
@@ -208,7 +208,7 @@
                                 </div>
                                 
                                 <div class="analyze-actions-row d-flex align-items-center justify-content-center gap-2 w-100">
-                                    <button type="button" class="create-flower-circle-btn" id="createFlowerButton" title="创建花朵" aria-label="Create a Flower">
+                                    <button type="button" class="create-flower-circle-btn" id="createFlowerButton" title="规划种花" aria-label="Create a Flower">
                                         <i class="fas fa-lightbulb" aria-hidden="true"></i>
                                     </button>
                                     <button class="btn btn-pink rounded-pill" id="analyzeButton">
@@ -396,13 +396,13 @@
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-1"></i>Cancel
+                        <i class="fas fa-times me-1"></i>取消
                     </button>
                     <button type="button" class="btn btn-danger rounded-pill" id="removeFlowerButton" style="display: none;">
-                        <i class="fas fa-trash me-1"></i>Remove Flower
+                        <i class="fas fa-trash me-1"></i>移除花朵
                     </button>
                     <button type="button" class="btn btn-pink rounded-pill" id="placeFlowerButton">
-                        <i class="fas fa-plus me-1"></i>Place Flower
+                        <i class="fas fa-plus me-1"></i>放置花朵
                     </button>
                 </div>
             </div>
@@ -415,11 +415,11 @@
             <div class="modal-content border-0 rounded-4 create-flower-modal-content">
                 <div class="modal-header bg-pink-gradient text-white border-0 rounded-top-4">
                     <h5 class="modal-title">
-                        <i class="fas fa-magic me-2"></i>Create a Flower
+                        <i class="fas fa-magic me-2"></i>规划种花
                     </h5>
                     <div class="d-flex align-items-center gap-2">
-                        <button type="button" class="btn btn-sm btn-light rounded-pill" id="createFlowerHelpButton" title="Help">
-                            <i class="fas fa-question-circle me-1"></i>Help
+                        <button type="button" class="btn btn-sm btn-light rounded-pill" id="createFlowerHelpButton" title="帮助">
+                            <i class="fas fa-question-circle me-1"></i>帮助
                         </button>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -427,13 +427,13 @@
                 <div class="modal-body p-4 create-flower-modal-body">
                     <div class="analysis-summary bg-light-pink rounded-3 p-3 mb-4 create-flower-intro">
                         <h6 class="mb-2">
-                            <i class="fas fa-info-circle me-2"></i>Achieve your Target Flower!
+                            <i class="fas fa-info-circle me-2"></i>种出想要的目标花！
                         </h6>
                         <p class="mb-0 create-flower-intro-lead">
-                            Choose a flower allowed on your current plot, then generate ranked breeding recipes (including fertilize-to-default-pattern and multi-step chains) plus layouts for the final breed step.
+                            选择当前地块允许种植花朵，然后生成按优先级排序杂交方案（包括施肥至默认图案以及多步杂交链）。此外，还提供最终杂交步骤的种植布局参考。
                         </p>
                         <div class="form-text mt-2" id="createFlowerContextNote">
-                            <i class="fas fa-info-circle me-1"></i>Target flowers are limited to this plot. Recipe parents may include flowers from other regions when needed for color/pattern transfer.
+                            <i class="fas fa-info-circle me-1"></i>目标花朵仅限于当前地块种植，但用于颜色/图案转移的杂交亲本可能是来自其他地区的花朵。
                         </div>
                         <!--<div class="form-text mt-1 create-flower-intro-extra">
                             <i class="fas fa-trophy me-1"></i>Layouts are solved exactly: every Empty / Parent A / Parent B assignment on your plantable cells is considered (branch-and-bound on large plots), maximizing chance of at least one target flower.
@@ -669,7 +669,7 @@
                                 <div id="analysisModeNotes"></div>
                                 <p class="mb-0" id="analysisSummary">点击“分析花朵”以查看繁育可能性!</p>
                                 <div class="form-text mt-2">
-                                    <i class="fas fa-info-circle me-1"></i>Shows the probability of getting at least one of each flower combination from all possible breeding locations (green cells) on your grid.<br>
+                                    <i class="fas fa-info-circle me-1"></i>显示在当前地块上，所有可繁殖位置（绿色格子）中获得至少一种杂交花组合的概率<br>
                                     <i class="fas fa-info-circle me-1"></i>当前百分比已自动包含使用肥料的效果
                                 </div>
                             </div>
@@ -696,7 +696,7 @@
             <div class="modal-content border-0 rounded-4">
                 <div class="modal-header bg-pink-gradient text-white border-0 rounded-top-4">
                     <h5 class="modal-title">
-                        <i class="fas fa-cog me-2"></i>Settings
+                        <i class="fas fa-cog me-2"></i>设置
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -706,14 +706,14 @@
                         <div class="col-md-6">
                             <div class="settings-section">
                                 <h6 class="mb-3">
-                                    <i class="fas fa-th me-2"></i>Grid Settings
+                                    <i class="fas fa-th me-2"></i>地块地形
                                 </h6>
                                 <div class="mb-3">
-                                    <label for="gridSize" class="form-label">Grid Size</label>
+                                    <label for="gridSize" class="form-label">地块网格尺寸</label>
                                     <input type="number" class="form-control" id="gridSize" min="3" max="11" value="5">
                                     <div class="form-text">
                                         <i class="fas fa-mobile-alt me-1"></i>
-                                        <span id="mobileGridSuggestion">Recommended: 5x5 for mobile, 7x7 for tablet</span>
+                                        <span id="mobileGridSuggestion">为获得最佳体验，移动端推荐5x5</span>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -781,7 +781,7 @@
                                 <!-- Other Preferences (Collapsed) -->
                                 <div class="mb-3 settings-other-block">
                                     <h6 class="text-pink mb-3 collapsible-header" data-bs-toggle="collapse" data-bs-target="#otherPreferencesCollapse" aria-expanded="false" aria-controls="otherPreferencesCollapse" style="cursor: pointer;">
-                                        <i class="fas fa-cog me-2"></i>Other
+                                        <i class="fas fa-cog me-2"></i>更多
                                         <i class="fas fa-chevron-down ms-2 collapse-icon"></i>
                                     </h6>
 
@@ -789,7 +789,7 @@
                                         <!-- Event Preferences -->
                                         <div class="mb-3">
                                             <h6 class="text-dark mb-3">
-                                                <i class="fas fa-calendar-alt me-2"></i>Event Preferences
+                                                <i class="fas fa-calendar-alt me-2"></i>活动偏好设置
                                             </h6>
                                             <div class="mb-3">
                                                 <label for="eventFlowerSelect" class="form-label">选择活动</label>
@@ -805,14 +805,14 @@
                                                     <option value="Hugs and Hearts">拥抱与真心(Roses)</option>
                                                     <option value="Happy Haven">乐土时光(欢乐水仙)</option>
                                                 </select>
-                                                <div class="form-text">选择活动花朵以模拟该活动特殊杂交概率</div>
+                                                <div class="form-text">选择活动花朵以模拟在对应活动时的特殊杂交概率</div>
                                             </div>
                                             <div class="form-check form-switch mb-3">
                                                 <input class="form-check-input" type="checkbox" id="eventSimulationToggle" checked>
                                                 <label class="form-check-label" for="eventSimulationToggle">
                                                     <i class="fas fa-calendar-alt me-2"></i>自动跟随活动
                                                 </label>
-                                                <div class="form-text">When enabled, event flowers get automatic spawn rates. When disabled, only breeding outcomes are shown.</div>
+                                                <div class="form-text">启用时，将计算活动花的自动生成率。关闭时，仅计算显示常规杂交概率。</div>
                                             </div>
                                         </div>
                                     </div>
@@ -864,7 +864,7 @@
                                     </label>
                                 </div>
                                 <div class="form-text mb-3">
-                                    <i class="fas fa-info-circle me-1"></i>Percentages are automatically calculated with Fertilizer use.
+                                    <i class="fas fa-info-circle me-1"></i>当前百分比已自动包含使用肥料的效果
                                 </div>
                             </div>
                         </div>
@@ -927,13 +927,13 @@
                                             <strong>放置花朵:</strong> 点击网格中任意空地快来放置你的花朵
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>选择花朵:</strong> 选择你的花朵类型、主要颜色、图案以及次要颜色
+                                            <strong>选择花朵:</strong> 选择你的花朵品种、主要颜色、图案以及次要颜色
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
                                             <strong>分析结果:</strong> 使用“分析花朵“来查看整个地块的繁育可能性和百分比
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>创建花朵:</strong> 使用小灯泡按钮打开“创建花朵”，输入目标花以获得排序后的繁育方案
+                                            <strong>创建花朵:</strong> 使用小灯泡按钮打开“规划种花”，输入目标花以获得排序后的繁育方案
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
                                             <strong>查看详情:</strong> 在视图模式下点击任一地块，以查看单个地块的详细繁育信息
@@ -962,7 +962,7 @@
                                             <strong>复制花朵:</strong> 点击地块上的花进行复制，并将其粘贴到空白地块上
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>重塑想象:</strong> 使用花小兔的重塑想象技能标记地块，在至少有一个符合条件的相邻地块时，生成率为100%。 
+                                            <strong>重塑想象:</strong> 使用花小兔的重塑想象技能标记地块，在至少有一个符合条件的相邻地块时，生成率为100%。系统将整合该地块的杂交结果并进行稀有度排序，并挑出最稀有的前3个杂交结果进行展示（若权重相同则并列显示）。注：本模拟器不涉及繁育冷却与保底机制。
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
                                             <strong>创建图案:</strong> 使用绘制模式快速布局花朵
@@ -976,16 +976,16 @@
                         <div class="col-md-6">
                             <div class="tutorial-section">
                                 <h6 class="mb-3 collapsible-header" data-bs-toggle="collapse" data-bs-target="#editViewModeCollapse" aria-expanded="false" aria-controls="editViewModeCollapse" style="cursor: pointer;">
-                                    <i class="fas fa-edit me-2"></i>Edit vs View Mode
+                                    <i class="fas fa-edit me-2"></i>编辑与视图
                                     <i class="fas fa-chevron-down ms-2 collapse-icon"></i>
                                 </h6>
                                 <div class="collapse" id="editViewModeCollapse">
                                     <ul class="list-group">
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>Edit Mode (Default):</strong> This is the main mode for designing your garden. You can place flowers, modify existing flowers, and use paint mode to create patterns.
+                                            <strong>编辑模式（默认）:</strong> This is the main mode for designing your garden. You can place flowers, modify existing flowers, and use paint mode to create patterns.
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>View Mode:</strong> Switch to this mode to analyze your garden in detail. Click any cell to see detailed breeding information, percentages, and possible outcomes for that specific location.
+                                            <strong>视图模式:</strong> Switch to this mode to analyze your garden in detail. Click any cell to see detailed breeding information, percentages, and possible outcomes for that specific location.
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
                                             <strong>Mode Toggle:</strong> Use the Edit/View toggle switch in the control panel to switch between modes. The switch shows which mode is currently active.
