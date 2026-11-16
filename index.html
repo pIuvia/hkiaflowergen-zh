@@ -2043,5 +2043,87 @@
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b1a9fefceffe44b59c667f3b6bddec28"}'></script>
     <script>
+
+    <script>
+// 1. 基础静态字典（你可以继续往里面加）
+const 汉化字典 = {
+    "Help": "帮助",
+    "Close": "关闭",
+    "Search flowers...": "搜索花朵...",
+    "Anemone": "海葵",
+    "Red": "红色"
+};
+
+// 2. 动态正则加工厂（只有3个核心规律，绝对轻量）
+function 翻译动态内容(text) {
+    // 规律1：Found 数字 possible flower combinations!
+    if (text.includes("Found ") && text.includes(" possible flower combinations!")) {
+        return text.replace(/Found (\d+) possible flower combinations!/, "找到了 $1 种可能的花卉组合！");
+    }
+    
+    // 规律2：坐标 Plot Position: (x, x)
+    if (text.includes("Plot Position:")) {
+        return text.replace(/Plot Position: \((\d+), (\d+)\)/, "地块位置：($1, $2)");
+    }
+    
+    // 规律3：活动弹窗 Event mode enabled/disabled
+    if (text.includes("Event mode enabled:")) {
+        return text.replace(/Event mode enabled: (.+)/, "活动模式已开启：$1");
+    }
+    if (text.includes("Event mode disabled:")) {
+        return text.replace(/Event mode disabled: (.+)/, "活动模式已关闭：$1");
+    }
+
+    // 规律4：那串很长的统计概率 Approx. X parents...
+    if (text.includes("Approx.") && text.includes("parents")) {
+        return text.replace(/Approx\. (\d+) parents · ~([\d\.]+)% chance of ≥1 target · ~([\d\.]+) expected · (\d+) breed cells/, "约需 $1 个亲本 · 获得至少1个目标的概率约 $2% · 预期产出约 $3 · 需 $4 个繁育格");
+    }
+
+    return text;
+}
+
+// 3. 核心翻译官（把静态字典和正则连起来）
+function 翻译网页文字(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+        let 原文字 = node.nodeValue.trim();
+        if (!原文字) return;
+
+        // 先查字典
+        if (汉化字典[原文字]) {
+            node.nodeValue = node.nodeValue.replace(原文字, 汉化字典[原文字]);
+        } else {
+            // 字典模糊匹配
+            for (let 英文 in 汉化字典) {
+                if (node.nodeValue.includes(英文)) {
+                    node.nodeValue = node.nodeValue.replace(new RegExp(英文, 'g'), 汉化字典[英文]);
+                }
+            }
+            // 字典搞不定的，交给正则！
+            node.nodeValue = 翻译动态内容(node.nodeValue);
+        }
+    } else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+            翻译网页文字(node.childNodes[i]);
+        }
+    }
+}
+
+// 4. 启动监听器
+document.addEventListener("DOMContentLoaded", () => {
+    翻译网页文字(document.body);
+});
+
+const 监听器 = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach(node => 翻译网页文字(node));
+        } else if (mutation.type === 'characterData') {
+            翻译网页文字(mutation.target);
+        }
+    });
+});
+监听器.observe(document.body, { childList: true, subtree: true, characterData: true });
+</script>
+    
 </body>
 </html>
