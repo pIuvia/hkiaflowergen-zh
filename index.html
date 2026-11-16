@@ -2043,74 +2043,86 @@
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b1a9fefceffe44b59c667f3b6bddec28"}'></script>
     <script>
-// 1. 基础静态字典（你可以继续往里面加）
+// 1. 准备好你的“汉化字典”（遇到这些词就自动替换）
 const 汉化字典 = {
-    "Help": "帮助",
-    "Close": "关闭",
-    "Search flowers...": "搜索花朵...",
     "Anemone": "海葵",
-    "Red": "红色"
+    "Bellbutton": "铃铛花",
+    "Bowblossom": "蝴蝶结花",
+    "Blazebulb": "焰球花",
+    "Bubbaluna": "月辉绣球",
+    "Crystalia": "晶簇花",
+    "Dandelily": "蒲公英花",
+    "Dream puff": "梦绒花",
+    "Eggwort": "蛋蛋花",
+    "Frostfeather": "霜羽花",
+    "Ghostgleam": "幽光",
+    "Glowbal": "光之花",
+    "Happadil": "欢乐水仙",
+    "Heavy Nettle": "重荨麻花",
+    "Hibiscus": "木槿",
+    "Marigold": "万寿菊",
+    "Penstemon": "吊钟柳花",
+    "Petunia": "矮牵牛",
+    "Pinwheel": "风车",
+    "Poinsettia": "一品红",
+    "Rose": "玫瑰",
+    "Sunburst": "曙绽花",
+    "Thistle": "蓟花",
+    "Tulias": "郁金香",
+    "Wheatflower": "麦粉花",
+    "Ombre": "渐变",
+    "Alternate": "交错",
+    "Confetti": "彩带",
+    "Cosmic": "宇宙",
+    "Crystal": "水晶",
+    "Frost": "冰霜",
+    "Glitter": "微光",
+    "Glow": "发光",
+    "Iridescent": "虹光",
+    "Molten": "熔岩",
+    "Patch": "地块",
+    "Ring": "环形",
+    "Speckled": "斑点",
+    "Striped": "条纹",
+    "Sunbeam": "曙光",
+    "Trim": "饰边",
+    "GENERAL": "普通",
+    "EXTREME": "稀有",
+    "EVENT": "活动"
 };
 
-// 2. 动态正则加工厂（只有3个核心规律，绝对轻量）
-function 翻译动态内容(text) {
-    // 规律1：Found 数字 possible flower combinations!
-    if (text.includes("Found ") && text.includes(" possible flower combinations!")) {
-        return text.replace(/Found (\d+) possible flower combinations!/, "找到了 $1 种可能的花卉组合！");
-    }
-    
-    // 规律2：坐标 Plot Position: (x, x)
-    if (text.includes("Plot Position:")) {
-        return text.replace(/Plot Position: \((\d+), (\d+)\)/, "地块位置：($1, $2)");
-    }
-    
-    // 规律3：活动弹窗 Event mode enabled/disabled
-    if (text.includes("Event mode enabled:")) {
-        return text.replace(/Event mode enabled: (.+)/, "活动模式已开启：$1");
-    }
-    if (text.includes("Event mode disabled:")) {
-        return text.replace(/Event mode disabled: (.+)/, "活动模式已关闭：$1");
-    }
-
-    // 规律4：那串很长的统计概率 Approx. X parents...
-    if (text.includes("Approx.") && text.includes("parents")) {
-        return text.replace(/Approx\. (\d+) parents · ~([\d\.]+)% chance of ≥1 target · ~([\d\.]+) expected · (\d+) breed cells/, "约需 $1 个亲本 · 获得至少1个目标的概率约 $2% · 预期产出约 $3 · 需 $4 个繁育格");
-    }
-
-    return text;
-}
-
-// 3. 核心翻译官（把静态字典和正则连起来）
+// 2. 翻译官的核心工作逻辑
 function 翻译网页文字(node) {
+    // 如果是纯文本节点
     if (node.nodeType === Node.TEXT_NODE) {
         let 原文字 = node.nodeValue.trim();
-        if (!原文字) return;
-
-        // 先查字典
         if (汉化字典[原文字]) {
+            // 如果有完全匹配的，直接替换
             node.nodeValue = node.nodeValue.replace(原文字, 汉化字典[原文字]);
         } else {
-            // 字典模糊匹配
+            // 匹配部分（比如 "Anemone (default)" 这种）
             for (let 英文 in 汉化字典) {
                 if (node.nodeValue.includes(英文)) {
                     node.nodeValue = node.nodeValue.replace(new RegExp(英文, 'g'), 汉化字典[英文]);
                 }
             }
-            // 字典搞不定的，交给正则！
-            node.nodeValue = 翻译动态内容(node.nodeValue);
         }
-    } else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
+    } 
+    // 如果是 HTML 标签，就进去找里面的文字（跳过脚本和输入框）
+    else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
         for (let i = 0; i < node.childNodes.length; i++) {
             翻译网页文字(node.childNodes[i]);
         }
     }
 }
 
-// 4. 启动监听器
+// 3. 开始监听网页的动态变化
+// 网页一加载完，先翻译一遍
 document.addEventListener("DOMContentLoaded", () => {
     翻译网页文字(document.body);
 });
 
+// 雇一个监工，只要网页一生成新内容（比如点开表格、下拉菜单），立刻去翻译
 const 监听器 = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'childList') {
@@ -2120,7 +2132,9 @@ const 监听器 = new MutationObserver((mutations) => {
         }
     });
 });
+
+// 开始盯梢整个网页
 监听器.observe(document.body, { childList: true, subtree: true, characterData: true });
-</script>    
+</script>
 </body>
 </html>
