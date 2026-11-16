@@ -430,7 +430,7 @@
                             <i class="fas fa-info-circle me-2"></i>种出想要的目标花！
                         </h6>
                         <p class="mb-0 create-flower-intro-lead">
-                            选择当前地块允许种植花朵，然后生成按优先级排序杂交方案（包括施肥至默认图案以及多步杂交链）。此外，还提供最终杂交步骤的种植布局参考。
+                            选择当前地块允许种植的花朵，然后生成按优先级排序杂交方案（包括施肥至获得默认图案以及多步杂交链），并提供最终杂交步骤的种植布局参考。
                         </p>
                         <div class="form-text mt-2" id="createFlowerContextNote">
                             <i class="fas fa-info-circle me-1"></i>目标花朵仅限于当前地块种植，但用于颜色/图案转移的杂交亲本可能是来自其他地区的花朵。
@@ -982,19 +982,19 @@
                                 <div class="collapse" id="editViewModeCollapse">
                                     <ul class="list-group">
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>编辑模式（默认）:</strong>这是设计种花花园的主要模式。你可以放置花朵、修改现有的花朵，并使用绘制模式快速排布。
+                                            <strong>编辑模式（默认）:</strong> 这是设计种花花园的主要模式。你可以放置花朵、修改现有的花朵，并使用绘制模式快速排布。
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>视图模式:</strong>切换到此模式以详细分析您的花园。点击任意单元格可查看该单独地块的详细繁育信息、百分比和可能结果。
+                                            <strong>视图模式:</strong> 切换到此模式以详细分析您的花园。点击任意单元格可查看该单独地块的详细繁育信息、百分比和可能结果。
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>模式切换:</strong>在面板中点击 编辑/视图 按钮在不同模式之间切换。该按钮显示当前激活的模式。
+                                            <strong>模式切换:</strong> 在面板中点击 编辑/视图 按钮在不同模式之间切换。该按钮显示当前激活的模式。
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>单元格分析:</strong>在视图模式下，点击任意单元格可详细查看该单独地块所有可能的繁殖结果、百分比及杂交可能。
+                                            <strong>单元格分析:</strong> 在视图模式下，点击任意单元格可详细查看该单独地块所有可能的繁殖结果、百分比及杂交可能。
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>策略规划:</strong>在你最终决定种花花园设计前使用编辑模式进行设计规划，然后使用视图模式分析花朵。
+                                            <strong>策略规划:</strong> 在你最终决定种花布局前使用编辑模式进行设计规划，然后使用视图模式分析花朵。
                                         </li>
                                     </ul>
                                 </div>
@@ -1011,7 +1011,7 @@
                                 <div class="collapse" id="createFlowerCollapse">
                                     <ul class="list-group">
                                         <li class="list-group-item border-0 bg-light-pink">
-                                            <strong>开始:</strong>选择一种在你现有地块上可种植的目标花
+                                            <strong>开始:</strong> 选择一种在你现有地块上可种植的目标花
                                         </li>
                                         <li class="list-group-item border-0 bg-light-pink">
                                             <strong>生成方案:</strong> CAF searches for ranked breeding recipes (including fertilize-to-default patterns and multi-step chains), then solves exact layouts for the final parents when both can be planted here.
@@ -2197,26 +2197,72 @@ const 汉化字典 = {
     "Glowbals": "光之花",
     "Roses": "玫瑰",
     "Happadils": "欢乐水仙",
+    // ====== 弹窗补丁 ======
+    "Mobile device detected! May run slower on mobile devices for large grids and plots. Try using less breeding steps and smaller grids. Large grids (especially 8x8+) take longer.": "检测到移动设备！在手机上处理大型网格和地块时可能会运行较慢。请尝试减少繁育步数并使用较小的网格。大型网格（尤其是 8x8 以上）需要更长的计算时间。",
+    "Target:": "目标：",
+    "Pick which parents to place:": "选择要放置的亲本：",
+    "Optimal layouts (final step parents)": "最优布局（最终亲本）",
+    "Best layout for P(≥1 target) on your current plantable cells.": "在当前可种植的地块上，获得至少 1 个目标花朵（P≥1）的最佳布局。",
+    "Recommended Layout": "推荐布局",
+    "Apply Layout": "应用布局",
 };
 
-// 2. 翻译官的核心工作逻辑
+// ====== 1. 先定义“动态正则翻译机” ======
+function 翻译动态内容(text) {
+    let match;
+
+    // 规律1: Found X possible...
+    match = text.match(/Found (\d+) possible flower combinations!/i);
+    if (match) return `找到了 ${match[1]} 种可能的花卉组合！`;
+
+    // 规律2: 坐标
+    match = text.match(/Plot Position: \((\d+), (\d+)\)/i);
+    if (match) return `地块位置：(${match[1]}, ${match[2]})`;
+
+    // 规律3: 活动弹窗
+    match = text.match(/Event mode (enabled|disabled): (.+)/i);
+    if (match) {
+        let 状态 = match[1].toLowerCase() === 'enabled' ? '已开启' : '已关闭';
+        let 活动名 = match[2].trim();
+        // 这里为了简短，简单做了几个活动名的翻译，你可以自己补充
+        let 中文 = 活动字典[活动名] || 活动名;
+        return `活动模式${状态}：${中文}`;
+    }
+
+    // 规律4: 那个巨长的统计数据
+    match = text.match(/Approx\. (\d+) parents · ~([\d\.]+)% chance of ≥1 target · ~([\d\.]+) expected · (\d+) breed cells/i);
+    if (match) return `约需 ${match[1]} 个亲本 · 获得至少 1 个目标的概率约 ${match[2]}% · 预期产出约 ${match[3]} · 需 ${match[4]} 个繁育格`;
+
+    // 规律5: 碎片标签
+    match = text.match(/Plan (\d+)/i); if (match) return `方案 ${match[1]}`;
+    match = text.match(/(\d+) step/i); if (match) return `${match[1]} 步`;
+    match = text.match(/Step (\d+)/i); if (match) return `第 ${match[1]} 步`;
+
+    return text; // 如果没匹配上，原样返回
+}
+
+// ====== 2. 再定义基础翻译官 ======
 function 翻译网页文字(node) {
     // 如果是纯文本节点
     if (node.nodeType === Node.TEXT_NODE) {
         let 原文字 = node.nodeValue.trim();
+        if (!原文字) return;
+
+        // 1. 先查基础字典（完全匹配）
         if (汉化字典[原文字]) {
-            // 如果有完全匹配的，直接替换
             node.nodeValue = node.nodeValue.replace(原文字, 汉化字典[原文字]);
         } else {
-            // 匹配部分（比如 "Anemone (default)" 这种）
+            // 2. 字典模糊匹配
             for (let 英文 in 汉化字典) {
                 if (node.nodeValue.includes(英文)) {
                     node.nodeValue = node.nodeValue.replace(new RegExp(英文, 'g'), 汉化字典[英文]);
                 }
             }
+            // 3. 字典搞不定的，送进“动态正则翻译机”去切！
+            node.nodeValue = 翻译动态内容(node.nodeValue);
         }
     } 
-    // 如果是 HTML 标签，就进去找里面的文字（跳过脚本和输入框）
+    // 如果是 HTML 标签，就进去找里面的文字
     else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
         for (let i = 0; i < node.childNodes.length; i++) {
             翻译网页文字(node.childNodes[i]);
