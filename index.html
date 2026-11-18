@@ -2230,50 +2230,59 @@ const 汉化字典 = {
     "Flower copied": "花朵已复制"
 };
 
-// 2. 翻译官的核心工作逻辑
-function 翻译网页文字(node) {
-    // 如果是纯文本节点
-    if (node.nodeType === Node.TEXT_NODE) {
-        let 原文字 = node.nodeValue.trim();
-        if (汉化字典[原文字]) {
-            // 如果有完全匹配的，直接替换
-            node.nodeValue = node.nodeValue.replace(原文字, 汉化字典[原文字]);
-        } else {
-            // 匹配部分（比如 "Anemone (default)" 这种）
-            for (let 英文 in 汉化字典) {
-                if (node.nodeValue.includes(英文)) {
-                    node.nodeValue = node.nodeValue.replace(new RegExp(英文, 'g'), 汉化字典[英文]);
-                }
+// 2. 基础翻译函数
+function 翻译文字(text) {
+    if (!text) return text;
+    let 原文字 = text.trim();
+    if (!原文字) return text;
+
+    let 新文字 = text;
+    
+    // 完全匹配
+    if (汉化字典[原文字]) {
+        新文字 = text.replace(原文字, 汉化字典[原文字]);
+    } else {
+        // 包含匹配（对付带数字的句子）
+        for (let 英文 in 汉化字典) {
+            if (新文字.includes(英文)) {
+                新文字 = 新文字.replace(new RegExp(英文, 'g'), 汉化字典[英文]);
             }
         }
-    } 
-    // 如果是 HTML 标签，就进去找里面的文字（跳过脚本和输入框）
-    else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
+    }
+    return 新文字;
+}
+
+// 3. 带有“绝对防呆”的节点遍历
+function 遍历翻译(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+        let 原文字 = node.nodeValue;
+        let 新文字 = 翻译文字(原文字);
+        
+        // 🌟 核心救命代码：只有真的变了，才去修改 DOM！否则跳过！
+        if (原文字 !== 新文字) {
+            node.nodeValue = 新文字;
+        }
+    } else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
         for (let i = 0; i < node.childNodes.length; i++) {
-            翻译网页文字(node.childNodes[i]);
+            遍历翻译(node.childNodes[i]);
         }
     }
 }
 
-// 3. 开始监听网页的动态变化
-// 网页一加载完，先翻译一遍
+// 4. 带有“防抖”的监听器（防止无限循环）
+let 定时器 = null;
+const 观察者 = new MutationObserver(() => {
+    if (定时器) clearTimeout(定时器);
+    定时器 = setTimeout(() => {
+        遍历翻译(document.body);
+    }, 200); // 网页安静下来 0.2 秒后，再统一去翻译
+});
+
 document.addEventListener("DOMContentLoaded", () => {
-    翻译网页文字(document.body);
+    遍历翻译(document.body); // 刚打开时翻译一次
+    观察者.observe(document.body, { childList: true, subtree: true, characterData: true }); // 启动监听
 });
-
-// 雇一个监工，只要网页一生成新内容（比如点开表格、下拉菜单），立刻去翻译
-const 监听器 = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach(node => 翻译网页文字(node));
-        } else if (mutation.type === 'characterData') {
-            翻译网页文字(mutation.target);
-        }
-    });
-});
-
-// 开始盯梢整个网页
-监听器.observe(document.body, { childList: true, subtree: true, characterData: true });
+//替换到这里结束
 </script>
 </body>
 </html>
