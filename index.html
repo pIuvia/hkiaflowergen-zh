@@ -2212,8 +2212,8 @@ const 汉化字典 = {
     "Event mode enabled": "活动模式已开启",
     "Event mode disabled": "活动模式已关闭",
     "Reimagine (Optimize) plots": "重塑（优化）地块",
-    "Reimagine on (100% spawn with a neighbor, rarest-bias rates)": "重塑已开启（有相邻花朵时100%生成，偏向最稀有概率）",
-    "Reimagine off": "重塑已关闭",
+    "Reimagine on (100% spawn with a neighbor, rarest-bias rates)": "重塑想象已开启",
+    "Reimagine off": "重塑想象已关闭",
     "Flower Breeding Grid": "花朵杂交网格",
     "Settings applied": "设置已应用",
     "Applied custom layout": "已应用自定义布局",
@@ -2230,59 +2230,37 @@ const 汉化字典 = {
     "Flower copied": "花朵已复制"
 };
 
-// 2. 基础翻译函数
-function 翻译文字(text) {
-    if (!text) return text;
-    let 原文字 = text.trim();
-    if (!原文字) return text;
-
-    let 新文字 = text;
+// 2. 纯映射替换（没有正则，只有最基础的文字替换）
+function 替换文字() {
+    // 用浏览器自带的最快扫描器，扫一遍网页里所有的纯文本
+    let 扫描器 = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let 节点;
     
-    // 完全匹配
-    if (汉化字典[原文字]) {
-        新文字 = text.replace(原文字, 汉化字典[原文字]);
-    } else {
-        // 包含匹配（对付带数字的句子）
+    while (节点 = 扫描器.nextNode()) {
+        let 原文 = 节点.nodeValue;
+        if (!原文 || !原文.trim()) continue;
+        
+        let 新文 = 原文;
+        
+        // 挨个去字典里对，包含就换掉
         for (let 英文 in 汉化字典) {
-            if (新文字.includes(英文)) {
-                新文字 = 新文字.replace(new RegExp(英文, 'g'), 汉化字典[英文]);
+            if (新文.includes(英文)) {
+                新文 = 新文.replace(英文, 汉化字典[英文]); // 纯字面量替换，不写正则！
             }
         }
-    }
-    return 新文字;
-}
-
-// 3. 带有“绝对防呆”的节点遍历
-function 遍历翻译(node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-        let 原文字 = node.nodeValue;
-        let 新文字 = 翻译文字(原文字);
         
-        // 🌟 核心救命代码：只有真的变了，才去修改 DOM！否则跳过！
-        if (原文字 !== 新文字) {
-            node.nodeValue = 新文字;
-        }
-    } else if (node.nodeType === Node.ELEMENT_NODE && !['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(node.tagName)) {
-        for (let i = 0; i < node.childNodes.length; i++) {
-            遍历翻译(node.childNodes[i]);
+        // 只有文字真变了，才更新到网页上，绝不触发死循环
+        if (原文 !== 新文) {
+            节点.nodeValue = 新文;
         }
     }
 }
 
-// 4. 带有“防抖”的监听器（防止无限循环）
-let 定时器 = null;
-const 观察者 = new MutationObserver(() => {
-    if (定时器) clearTimeout(定时器);
-    定时器 = setTimeout(() => {
-        遍历翻译(document.body);
-    }, 200); // 网页安静下来 0.2 秒后，再统一去翻译
-});
-
+// 3. 网页加载完，只扫这一次！
 document.addEventListener("DOMContentLoaded", () => {
-    遍历翻译(document.body); // 刚打开时翻译一次
-    观察者.observe(document.body, { childList: true, subtree: true, characterData: true }); // 启动监听
+    // 延迟1秒，等网页那些动态内容加载出来
+    setTimeout(替换文字, 1000);
 });
-//替换到这里结束
 </script>
 </body>
 </html>
